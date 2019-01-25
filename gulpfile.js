@@ -34,17 +34,6 @@ gulp.task('styles', function() {
 	.pipe(browserSync.stream())
 });
 
-gulp.task('js', function() {
-	return gulp.src([
-		'app/libs/jquery/dist/jquery.min.js',
-		'app/js/common.js', // Always at the end
-		])
-	.pipe(concat('scripts.min.js'))
-	// .pipe(uglify()) // Mifify js (opt.)
-	.pipe(gulp.dest('app/js'))
-	.pipe(browserSync.reload({ stream: true }))
-});
-
 gulp.task('rsync', function() {
 	return gulp.src('app/**')
 	.pipe(rsync({
@@ -60,9 +49,8 @@ gulp.task('rsync', function() {
 	}))
 });
 
-gulp.task('watch', ['styles', 'js', 'browser-sync'], function() {
+gulp.task('watch', ['styles','browser-sync'], function() {
 	gulp.watch('app/'+syntax+'/**/*.'+syntax+'', ['styles']);
-	gulp.watch(['libs/**/*.js', 'app/js/common.js'], ['js']);
 	gulp.watch('app/*.html', browserSync.reload)
 });
 
